@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Story 💖</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Georgia", serif;
+  background: linear-gradient(120deg, #f6c1ff, #c1d8ff);
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: white;
+}
+
+.scene {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scene.active {
+  display: block;
+}
+
+.fade {
+  animation: fadeIn 2s ease forwards;
+}
+
+.big {
+  font-size: 4em;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+.photos {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(0,0,0,0.4);
+}
+
+.photos img {
+  max-width: 60%;
+  max-height: 70%;
+  margin-top: 80px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: fadeIn 1.5s ease;
+}
+
+.final {
+  font-size: 1.4em;
+  padding: 40px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1em;
+  background: rgba(255,255,255,0.3);
+  color: white;
+  cursor: pointer;
+}
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<div class="container">
+
+  <div id="s1" class="scene active fade">
+    <h1>Haloooooooooooooooooo 💖</h1>
+  </div>
+
+  <div id="s2" class="scene fade">
+    <h2>verthe ponninn aykkkaaan indakeeeeethaaa seryaaavo ariyuleeee…</h2>
+  </div>
+
+  <div id="s3" class="scene fade">
+    <div class="big">LUVVVVVVVVV YOUUUUUUUUUUUU PONNNNNNNNAAAAAAAAAAA ❤️</div>
+  </div>
+
+  <div id="photos" class="photos">
+    <img id="photo" src="">
+  </div>
+
+  <div id="final" class="scene fade final">
+    <p>
+      PONNNNNN MAKES ME THE HAPPPPIEST.<br>
+      PONNNNNNNNN EPPPLM HAAAAPPPY AAAAAYYTTT IRKKKANATTTAAAA.<br><br>
+      PONNNNNNNN LOVESSSSSS YOUUUU KOREEEEEEE KOREEEEEEEE 💕
+    </p>
+    <button onclick="location.reload()">Replay our story 🔁</button>
+  </div>
+
+</div>
+
+<script>
+const scenes = ["s1", "s2", "s3"];
+let index = 0;
+
+const photos = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+let photoIndex = 0;
+
+const music = document.getElementById("music");
+
+document.body.addEventListener("click", () => {
+  music.play();
+}, { once: true });
+
+function showNextScene() {
+  if (index < scenes.length) {
+    document.getElementById(scenes[index]).classList.remove("active");
+    index++;
+    if (index < scenes.length) {
+      document.getElementById(scenes[index]).classList.add("active");
+    } else {
+      showPhotos();
+    }
+  }
+}
+
+function showPhotos() {
+  const photoBox = document.getElementById("photos");
+  const img = document.getElementById("photo");
+  photoBox.style.display = "block";
+
+  const interval = setInterval(() => {
+    if (photoIndex < photos.length) {
+      img.src = photos[photoIndex];
+      photoIndex++;
+    } else {
+      clearInterval(interval);
+      photoBox.style.display = "none";
+      document.getElementById("final").classList.add("active");
+    }
+  }, 2500);
+}
+
+setInterval(() => {
+  if (index < scenes.length) showNextScene();
+}, 3500);
+
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 6 + Math.random() * 4 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 10000);
+}, 900);
+</script>
+
+</body>
+</html>
